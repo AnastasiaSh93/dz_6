@@ -1,37 +1,50 @@
-package org.example;
-
 import java.util.*;
 
 public class Main {
-    public static void main(String[] args) {
-        String[] sArray = {"мама", "папа", "їж їжак желе"};
-        String s = "";
-        for (String n:sArray)
-            s+= n;
-        char[] charArr = s.toCharArray();
 
-        HashMap<Character, Integer> hashmap = new HashMap<>();
+        public static void main(String[] args) {
 
-        for (char ch : charArr) {
-            int count = hashmap.getOrDefault(ch, 0);
-
-            hashmap.put(ch, count + 1);
+            printUniqueChars(new String[]{"мама", "тато", "їж їжак желе"});
         }
+        public static void printUniqueChars (String[] words){
+            List<String> evenWords = new ArrayList<>();
+            int counter = 0;
+            for(String word: words){
+                char[] chars                      = word.toCharArray();
+                Map<Character, Integer> charCount = new HashMap<>();
+                for(char ch : chars){
+                    charCount.put(ch, charCount.getOrDefault(ch, 0)+1);
 
-        for(Map.Entry<Character, Integer> pair : hashmap.entrySet()){
-            if(pair.getValue() % 2 ==0)
-                System.out.println(pair.getKey());
+                }
+
+                boolean isEven = false;
+                for(Character ch: charCount.keySet()){
+                    isEven = charCount.get(ch) % 2 == 0;
+                    if(!isEven) break;
+
+                }
+
+                if(isEven) {
+                    evenWords.add(word);
+                    counter ++;
+                    if (counter == 2)
+                        break;
+
+                }
+            }
+            Set<Character> uniqueChars = new HashSet<>();
+            for (String word : evenWords){
+                char[] chars = word.toCharArray();
+                for(char ch : chars)
+                    uniqueChars.add(ch);
+            }
+            System.out.println(uniqueChars);
+
         }
-
-        for (int b = 0; b < charArr.length; b++) {
-            hashmap.put(charArr[b], b);
-        }
-
-        System.out.println(hashmap.keySet());
 
     }
 
-}
+
 
 
 
